@@ -21,11 +21,9 @@ sfx_api = 'https://api.' + cfg['signalfx']['realm'] + '.signalfx.com/v2'
 w_group = requests.get(weather_url + '/group?appid=' + cfg['weather']['api_key'] + '&id=' + cfg['weather']['city_ids'] + '&units=' + cfg['weather']['unit']).json()
 city_count = int(w_group['cnt'])
 
-print(w_group)
 # Get weather for main city
 main_city = requests.get(weather_url + '/weather?appid=' + cfg['weather']['api_key'] +'&q=' + cfg['weather']['main_city'] + '&units=' + cfg['weather']['unit']).json()
 
-print(main_city)
 # Create JSON payload for SignalFx datapoint(s)
 jsondata = []
 sfxdata = {}
