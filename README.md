@@ -9,3 +9,4 @@ Run weather.py as a cron job e.g.
 
 `*/30 * * * * cd /home/rwc/sfx_weather/; python3 /home/rwc/sfx_weather/weather.py`
 
+![Image description](link-to-image)
