@@ -1,4 +1,5 @@
 weather:
+  # Get API Key from https://openweathermap.org/appid
   api_key: xxx
   city_ids: "2643743,1689973,5128638"
   unit: metric
