@@ -1,0 +1,10 @@
+weather:
+  api_key: xxx
+  city_ids: "2643743,1689973,5128638"
+  unit: metric
+  main_city: "Madrid,ES"
+
+signalfx:
+  access_token: xxx
+  realm: us0
+  chart_id: xxx
