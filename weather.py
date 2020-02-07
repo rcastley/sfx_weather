@@ -35,7 +35,7 @@ for i in range(city_count):
 sfxdata['gauge'] = jsondata
 
 # Get weather icon and base64 encode
-iconfile = "128x128/" + main_city['weather'][0]['icon'] + ".png"
+iconfile = "icons/" + main_city['weather'][0]['icon'] + ".png"
 with open(iconfile, "rb") as image_file:
     encoded_string = base64.b64encode(image_file.read())
 
