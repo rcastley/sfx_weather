@@ -7,6 +7,11 @@ import yaml
 with open('config.yaml', 'r') as ymlfile:
     cfg = yaml.safe_load(ymlfile)
 
+if cfg['weather']['unit'] == 'metric':
+    unit = 'C'
+else:
+    unit = 'F'
+
 # Set common URLs
 weather_url = 'http://api.openweathermap.org/data/2.5'
 sfx_ingest = 'https://ingest.' + cfg['signalfx']['realm'] + '.signalfx.com/v2/datapoint'
@@ -16,9 +21,11 @@ sfx_api = 'https://api.' + cfg['signalfx']['realm'] + '.signalfx.com/v2'
 w_group = requests.get(weather_url + '/group?appid=' + cfg['weather']['api_key'] + '&id=' + cfg['weather']['city_ids'] + '&units=' + cfg['weather']['unit']).json()
 city_count = int(w_group['cnt'])
 
+print(w_group)
 # Get weather for main city
 main_city = requests.get(weather_url + '/weather?appid=' + cfg['weather']['api_key'] +'&q=' + cfg['weather']['main_city'] + '&units=' + cfg['weather']['unit']).json()
 
+print(main_city)
 # Create JSON payload for SignalFx datapoint(s)
 jsondata = []
 sfxdata = {}
@@ -51,7 +58,7 @@ chartData = {
     "description": "",
     "name": "Current Weather",
     "options" : {
-        "markdown" : "<table width=\"100%\" height=\"100%\" rules=\"none\">\n<tr>\n<td valign=\"middle\" align=\"center\"><img src=\"data:image/png;base64, " + encoded_string.decode('utf-8') + " \" width=\"100\">\n<font size=\"13\">" + str(round(main_city['main']['temp'])) + "&#176;C</font>\n<br />\n<font size=\"5\">" + main_city['name'] + "\n</td>\n</tr></table>",
+        "markdown" : "<table width=\"100%\" height=\"100%\" rules=\"none\">\n<tr>\n<td valign=\"middle\" align=\"center\"><img src=\"data:image/png;base64, " + encoded_string.decode('utf-8') + " \" width=\"100\">\n<font size=\"13\">" + str(round(main_city['main']['temp'])) + "&#176;" + unit + "</font>\n<br />\n<font size=\"5\">" + main_city['name'] + "\n</td>\n</tr></table>",
         "type": "Text"}
     }
 
