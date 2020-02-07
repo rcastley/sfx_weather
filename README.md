@@ -5,4 +5,6 @@ Edit the `config.yaml`
 
 Create a blank text chart in SFx and not the chart ID
 
+Run weather.py as a cron job (not tested yet, might be a path issue to icons)
+
 **TODO:** Handle units
