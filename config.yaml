@@ -5,7 +5,7 @@ weather:
   # Defaults to London, New York and San Francisco
   city_ids: "2643743,1689973,5391959"
   unit: metric
-  main_city: "Madrid,ES"
+  main_city: "San Francisco,US"
 
 signalfx:
   access_token: xxx
