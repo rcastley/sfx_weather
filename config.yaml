@@ -2,7 +2,8 @@ weather:
   # Get API Key from https://openweathermap.org/appid
   api_key: xxx
   # City IDs can be found at http://bulk.openweathermap.org/sample/
-  city_ids: "2643743,1689973,5128638"
+  # Defaults to London, New York and San Francisco
+  city_ids: "2643743,1689973,5391959"
   unit: metric
   main_city: "Madrid,ES"
 
