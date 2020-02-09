@@ -7,10 +7,13 @@ import yaml
 with open('config.yaml', 'r') as ymlfile:
     cfg = yaml.safe_load(ymlfile)
 
+# Imperial/metric unit/speed
 if cfg['weather']['unit'] == 'metric':
     unit = 'C'
+    speed = 'm/s'
 else:
     unit = 'F'
+    speed = 'mph'
 
 # Set common URLs
 weather_url = 'http://api.openweathermap.org/data/2.5'
@@ -23,6 +26,11 @@ city_count = int(w_group['cnt'])
 
 # Get weather for main city
 main_city = requests.get(weather_url + '/weather?appid=' + cfg['weather']['api_key'] +'&q=' + cfg['weather']['main_city'] + '&units=' + cfg['weather']['unit']).json()
+
+# Set wind direction
+deg=int((main_city['wind']['deg']/22.5)+.5)
+arr=["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
+direction = arr[(deg % 16)]
 
 # Create JSON payload for SignalFx datapoint(s)
 jsondata = []
@@ -54,9 +62,16 @@ headers = {
 chartData = {
     "customProperties" : {},
     "description": "",
-    "name": "Current Weather",
+    "name": main_city['name'] + ", " + main_city['sys']['country'],
     "options" : {
-        "markdown" : "<table width=\"100%\" height=\"100%\" rules=\"none\">\n<tr>\n<td valign=\"middle\" align=\"center\"><img src=\"data:image/png;base64, " + encoded_string.decode('utf-8') + " \" width=\"100\">\n<font size=\"13\">" + str(round(main_city['main']['temp'])) + "&#176;" + unit + "</font>\n<br />\n<font size=\"5\">" + main_city['name'] + "\n</td>\n</tr></table>",
+        "markdown" : "<table width=\"100%\" height=\"100%\" rules=\"none\">\n" +
+        "<tr>\n" +
+        "<td valign=\"middle\" align=\"center\">" +
+        "<img src=\"data:image/png;base64, " + encoded_string.decode('utf-8') + " \" width=\"100\">\n" +
+        "<font size=\"13\">" + str(round(main_city['main']['temp'])) + "&#176;" + unit + "</font>\n" +
+        "<br />\n<font size=\"4\">" + main_city['weather'][0]['description'].title() + "</font>" +
+        "<br /><font size=\"1\">Wind: " + direction + " " + str(round(main_city['wind']['speed'])) + " " + speed + "</font>\n" +
+        "</td>\n</tr></table>",
         "type": "Text"}
     }
 
