@@ -67,7 +67,7 @@ chartData = {
         "markdown" : "<table width=\"100%\" height=\"100%\" rules=\"none\">\n" +
         "<tr>\n" +
         "<td valign=\"middle\" align=\"center\">" +
-        "<img src=\"data:image/png;base64, " + encoded_string.decode('utf-8') + " \" width=\"100\">\n" +
+        "<img src=\"data:image/png;base64, " + encoded_string.decode('utf-8') + " \" width=\"95\">\n" +
         "<font size=\"13\">" + str(round(main_city['main']['temp'])) + "&#176;" + unit + "</font>\n" +
         "<br />\n<font size=\"4\">" + main_city['weather'][0]['description'].title() + "</font>" +
         "<br /><font size=\"1\">Wind: " + direction + " " + str(round(main_city['wind']['speed'])) + " " + speed + "</font>\n" +
